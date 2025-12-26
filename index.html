@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Курсы НБК (KZT) — GitHub Pages</title>
-
+  <title>Курсы НБК (USD/EUR/RUB)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,7 +12,6 @@
     :root{
       --bg:#0b1020;
       --card:#111a33;
-      --card2:#0f1730;
       --line:rgba(255,255,255,.10);
       --text:#eaf0ff;
       --muted:rgba(234,240,255,.70);
@@ -34,14 +32,13 @@
                   var(--bg);
       color:var(--text);
     }
-    a{color:var(--accent)}
-    .wrap{max-width:1100px;margin:0 auto;padding:28px 16px 40px}
-    .header{
+    .wrap{max-width:980px;margin:0 auto;padding:26px 16px 40px}
+    .top{
       display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;
-      margin-bottom:18px;
+      margin-bottom:16px;
     }
-    .title h1{margin:0;font-size:22px;letter-spacing:.2px}
-    .title p{margin:6px 0 0;color:var(--muted);line-height:1.45;max-width:720px}
+    h1{margin:0;font-size:20px;letter-spacing:.2px}
+    .sub{margin:6px 0 0;color:var(--muted);line-height:1.45;max-width:700px}
 
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
@@ -50,28 +47,23 @@
       box-shadow:var(--shadow);
       overflow:hidden;
     }
-
     .controls{
       padding:14px;
       display:flex;gap:10px;align-items:center;flex-wrap:wrap;
       background: rgba(0,0,0,.10);
       border-bottom:1px solid var(--line);
     }
-    .field{
-      display:flex;flex-direction:column;gap:6px;
-      min-width:180px;
-    }
+    .field{display:flex;flex-direction:column;gap:6px;min-width:180px}
     label{font-size:12px;color:var(--muted)}
-    input[type="date"], input[type="text"]{
+    input[type="date"]{
       background: rgba(255,255,255,.06);
       border:1px solid var(--line);
       color:var(--text);
       border-radius:12px;
       padding:10px 12px;
       outline:none;
+      min-width:180px;
     }
-    input[type="date"]{min-width:180px}
-    input::placeholder{color:rgba(234,240,255,.45)}
     .btn{
       cursor:pointer;
       border:0;
@@ -80,15 +72,15 @@
       background: linear-gradient(180deg, var(--accent), var(--accent2));
       color:#081028;
       font-weight:700;
-      box-shadow: 0 10px 30px rgba(106,166,255,.25);
       transition: transform .08s ease;
       margin-top:18px;
+      box-shadow: 0 10px 30px rgba(106,166,255,.25);
     }
     .btn:active{transform: translateY(1px)}
     .meta{
       margin-left:auto;
       display:flex;flex-direction:column;gap:6px;
-      min-width:260px;
+      min-width:320px;
     }
     .pill{
       display:inline-flex;align-items:center;gap:8px;
@@ -102,9 +94,32 @@
     .dot{width:8px;height:8px;border-radius:999px;background:var(--warn)}
     .dot.ok{background:var(--good)}
     .dot.bad{background:var(--bad)}
+    a{color:var(--accent)}
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
+      padding:14px;
+      border-bottom:1px solid var(--line);
+    }
+    .mini{
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      padding:12px;
+    }
+    .miniTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .ccy{font-weight:800;letter-spacing:.04em}
+    .name{color:var(--muted);font-size:12px;margin-top:2px}
+    .rate{font-size:18px;font-weight:800}
+    .subrate{margin-top:6px;color:var(--muted);font-size:12px}
+    .chg.up{color:var(--good);font-weight:700}
+    .chg.down{color:var(--bad);font-weight:700}
+    .chg.zero{color:var(--muted);font-weight:700}
 
     .tableWrap{overflow:auto}
-    table{width:100%;border-collapse:separate;border-spacing:0;min-width:900px}
+    table{width:100%;border-collapse:separate;border-spacing:0;min-width:760px}
     thead th{
       position:sticky;top:0;
       background: rgba(16,24,48,.92);
@@ -126,14 +141,11 @@
       white-space:nowrap;
     }
     tbody tr:hover td{background: rgba(255,255,255,.04)}
-    .muted{color:var(--muted)}
     .num{text-align:right;font-variant-numeric: tabular-nums}
-    .chg.up{color:var(--good);font-weight:600}
-    .chg.down{color:var(--bad);font-weight:600}
-    .foot{
-      padding:12px 14px;color:var(--muted);font-size:12px;line-height:1.45
-    }
-    @media (max-width: 720px){
+    .foot{padding:12px 14px;color:var(--muted);font-size:12px;line-height:1.45}
+
+    @media (max-width: 820px){
+      .grid{grid-template-columns:1fr}
       .meta{min-width:unset;width:100%}
       .btn{width:100%}
       .field{min-width:unset;flex:1}
@@ -144,39 +156,29 @@
 
 <body>
   <div class="wrap">
-    <div class="header">
-      <div class="title">
-        <h1>Курсы валют НБК (KZT) — одностраничник на GitHub Pages</h1>
-        <p>
-          Данные берутся из публичного RSS/веб-сервиса НБК:
-          <span class="muted">get_rates.cfm (XML)</span>.
-          Если браузер заблокирует запрос из-за CORS — ниже дам решение через GitHub Actions.
-        </p>
+    <div class="top">
+      <div>
+        <h1>Курсы НБК (KZT): USD / EUR / RUB</h1>
+        <p class="sub">Одностраничник на GitHub Pages. Источник: RSS get_rates.cfm (XML). Если CORS блокирует прямой запрос — используем локальный JSON (data/nbk_usd_eur_rub.json).</p>
       </div>
     </div>
 
     <div class="card">
       <div class="controls">
         <div class="field">
-          <label for="date">Дата (курсы на дату)</label>
+          <label for="date">Дата</label>
           <input id="date" type="date" />
         </div>
-
-        <div class="field" style="flex:1">
-          <label for="q">Поиск (код или название)</label>
-          <input id="q" type="text" placeholder="например: USD, EUR, РУБЛЬ..." />
-        </div>
-
         <button class="btn" id="loadBtn">Загрузить</button>
 
         <div class="meta">
           <div class="pill"><span class="dot" id="statusDot"></span><span id="statusText">Готово</span></div>
-          <div class="pill">
-            Источник:
-            <a id="srcLink" href="#" target="_blank" rel="noreferrer">—</a>
-          </div>
+          <div class="pill">Источник: <a id="srcLink" href="#" target="_blank" rel="noreferrer">—</a></div>
+          <div class="pill">Fallback JSON: <span id="fallbackPath">data/nbk_usd_eur_rub.json</span></div>
         </div>
       </div>
+
+      <div class="grid" id="cards"></div>
 
       <div class="tableWrap">
         <table>
@@ -192,181 +194,219 @@
             </tr>
           </thead>
           <tbody id="tbody">
-            <tr><td colspan="7" class="muted">Нажми «Загрузить»</td></tr>
+            <tr><td colspan="7" style="color:rgba(234,240,255,.70)">Нажми «Загрузить»</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="foot">
-        Под капотом: <span class="muted">fetch → XML → DOMParser</span>.
-        Официальные курсы НБК фиксируются ежедневно. :contentReference[oaicite:4]{index=4}
+        Совет: если выбираешь дату, которая была выходным/праздником, может не быть данных на эту дату — тогда попробуй предыдущий рабочий день.
       </div>
     </div>
   </div>
 
   <script>
+    const TARGET = new Set(["USD","EUR","RUB"]);
+    const FALLBACK_JSON = "data/nbk_usd_eur_rub.json";
+
     const els = {
-      date: document.getElementById('date'),
-      q: document.getElementById('q'),
-      loadBtn: document.getElementById('loadBtn'),
-      tbody: document.getElementById('tbody'),
-      statusDot: document.getElementById('statusDot'),
-      statusText: document.getElementById('statusText'),
-      srcLink: document.getElementById('srcLink'),
+      date: document.getElementById("date"),
+      loadBtn: document.getElementById("loadBtn"),
+      tbody: document.getElementById("tbody"),
+      cards: document.getElementById("cards"),
+      statusDot: document.getElementById("statusDot"),
+      statusText: document.getElementById("statusText"),
+      srcLink: document.getElementById("srcLink"),
     };
 
     function setStatus(kind, text){
       els.statusText.textContent = text;
-      els.statusDot.classList.remove('ok','bad');
-      if(kind === 'ok') els.statusDot.classList.add('ok');
-      else if(kind === 'bad') els.statusDot.classList.add('bad');
+      els.statusDot.classList.remove("ok","bad");
+      if(kind === "ok") els.statusDot.classList.add("ok");
+      if(kind === "bad") els.statusDot.classList.add("bad");
     }
 
-    function toDDMMYYYY(dateObj){
-      const dd = String(dateObj.getDate()).padStart(2,'0');
-      const mm = String(dateObj.getMonth()+1).padStart(2,'0');
-      const yyyy = dateObj.getFullYear();
+    function toDDMMYYYY(d){
+      const dd = String(d.getDate()).padStart(2,"0");
+      const mm = String(d.getMonth()+1).padStart(2,"0");
+      const yyyy = d.getFullYear();
       return `${dd}.${mm}.${yyyy}`;
     }
 
     function normNum(s){
       if(s == null) return null;
-      const t = String(s).trim().replace(/\s/g,'').replace(',', '.');
+      const t = String(s).trim().replace(/\s/g,"").replace(",",".");
       const n = Number(t);
       return Number.isFinite(n) ? n : null;
     }
 
     function escapeHtml(s){
-      return String(s ?? '')
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'",'&#039;');
+      return String(s ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
 
-    async function fetchNBKRates(ddmmyyyy){
-      // Официальный RSS/веб-сервис НБК: get_rates.cfm (XML)
-      // Пример структуры элементов: <fullname>, <title>, <description>, <quant>, <index>, <change> :contentReference[oaicite:5]{index=5}
-      const url = `https://nationalbank.kz/rss/get_rates.cfm?fdate=${encodeURIComponent(ddmmyyyy)}&switch=russian`;
-      els.srcLink.href = url;
-      els.srcLink.textContent = `get_rates.cfm?fdate=${ddmmyyyy}`;
-
-      const res = await fetch(url, { cache: 'no-store' });
-      if(!res.ok){
-        throw new Error(`HTTP ${res.status}`);
-      }
-      const xmlText = await res.text();
-
-      const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
-      const items = Array.from(xml.querySelectorAll('item'));
-
-      const rows = items.map(item => {
-        const code = item.querySelector('title')?.textContent?.trim() || '';
-        const name = item.querySelector('fullname')?.textContent?.trim() || '';
-        const rate = normNum(item.querySelector('description')?.textContent); // KZT за "номинал"
-        const quant = normNum(item.querySelector('quant')?.textContent) ?? 1;
-        const idx = item.querySelector('index')?.textContent?.trim() || '';
-        const chg = normNum(item.querySelector('change')?.textContent);
-
-        const per1 = (rate != null && quant) ? (rate / quant) : null;
-        return { code, name, quant, rate, per1, chg, idx };
-      });
-
-      // Иногда в RSS могут быть служебные/пустые элементы — подчистим
-      return rows.filter(r => r.code || r.name);
+    function chgClass(chg){
+      if(chg == null) return "zero";
+      if(chg > 0) return "up";
+      if(chg < 0) return "down";
+      return "zero";
     }
 
-    function render(rows){
-      const q = els.q.value.trim().toLowerCase();
-      const filtered = !q ? rows : rows.filter(r => (
-        r.code.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)
-      ));
+    function render(rows, meta){
+      // Карточки (USD/EUR/RUB) — красиво
+      const byCode = Object.fromEntries(rows.map(r => [r.code, r]));
+      const order = ["USD","EUR","RUB"];
+      els.cards.innerHTML = order.map(code => {
+        const r = byCode[code];
+        if(!r){
+          return `
+            <div class="mini">
+              <div class="miniTop">
+                <div>
+                  <div class="ccy">${code}</div>
+                  <div class="name">—</div>
+                </div>
+                <div class="chg zero">нет данных</div>
+              </div>
+              <div class="rate">—</div>
+              <div class="subrate">—</div>
+            </div>
+          `;
+        }
+        const per1 = (r.rate != null && r.quant) ? (r.rate / r.quant) : null;
+        return `
+          <div class="mini">
+            <div class="miniTop">
+              <div>
+                <div class="ccy">${escapeHtml(r.code)}</div>
+                <div class="name">${escapeHtml(r.name || "")}</div>
+              </div>
+              <div class="chg ${chgClass(r.chg)}">${r.chg == null ? "—" : (r.chg > 0 ? "+" : "") + r.chg.toFixed(4)}</div>
+            </div>
+            <div class="rate">${r.rate == null ? "—" : r.rate.toFixed(4)} <span style="color:rgba(234,240,255,.70);font-size:12px;font-weight:700">KZT</span></div>
+            <div class="subrate">
+              Номинал: <b>${r.quant ?? "—"}</b> · за 1 ед.: <b>${per1 == null ? "—" : per1.toFixed(4)}</b> · тренд: <b>${escapeHtml(r.idx || "—")}</b>
+            </div>
+          </div>
+        `;
+      }).join("");
 
-      if(filtered.length === 0){
-        els.tbody.innerHTML = `<tr><td colspan="7" class="muted">Ничего не найдено</td></tr>`;
+      // Таблица
+      if(!rows.length){
+        els.tbody.innerHTML = `<tr><td colspan="7" style="color:rgba(234,240,255,.70)">Нет данных</td></tr>`;
         return;
       }
 
-      els.tbody.innerHTML = filtered.map(r => {
-        const trend = (r.idx || '').toUpperCase();
-        const chgClass = (r.chg == null) ? '' : (r.chg > 0 ? 'up' : (r.chg < 0 ? 'down' : ''));
-        const trendText = trend || '—';
-
+      els.tbody.innerHTML = rows.map(r => {
+        const per1 = (r.rate != null && r.quant) ? (r.rate / r.quant) : null;
+        const chg = r.chg;
+        const chgText = (chg == null) ? "—" : ((chg > 0 ? "+" : "") + chg.toFixed(4));
         return `
           <tr>
             <td><b>${escapeHtml(r.code)}</b></td>
-            <td>${escapeHtml(r.name || '—')}</td>
-            <td class="num">${r.quant ?? '—'}</td>
-            <td class="num">${r.rate == null ? '—' : r.rate.toFixed(4)}</td>
-            <td class="num">${r.per1 == null ? '—' : r.per1.toFixed(4)}</td>
-            <td class="num chg ${chgClass}">${r.chg == null ? '—' : r.chg.toFixed(4)}</td>
-            <td class="muted">${escapeHtml(trendText)}</td>
+            <td>${escapeHtml(r.name || "—")}</td>
+            <td class="num">${r.quant ?? "—"}</td>
+            <td class="num">${r.rate == null ? "—" : r.rate.toFixed(4)}</td>
+            <td class="num">${per1 == null ? "—" : per1.toFixed(4)}</td>
+            <td class="num"><span class="chg ${chgClass(chg)}">${chgText}</span></td>
+            <td style="color:rgba(234,240,255,.70)">${escapeHtml(r.idx || "—")}</td>
           </tr>
         `;
-      }).join('');
+      }).join("");
+    }
+
+    async function fetchFromNBK(ddmmyyyy){
+      const url = `https://nationalbank.kz/rss/get_rates.cfm?fdate=${encodeURIComponent(ddmmyyyy)}&switch=russian`;
+      els.srcLink.href = url;
+      els.srcLink.textContent = `NBK get_rates.cfm?fdate=${ddmmyyyy}`;
+
+      const res = await fetch(url, { cache: "no-store" });
+      if(!res.ok) throw new Error(`NBK HTTP ${res.status}`);
+
+      const xmlText = await res.text();
+      const xml = new DOMParser().parseFromString(xmlText, "text/xml");
+      const items = Array.from(xml.querySelectorAll("item"));
+
+      const rows = items.map(item => {
+        const code = item.querySelector("title")?.textContent?.trim() || "";
+        if(!TARGET.has(code)) return null;
+
+        const name = item.querySelector("fullname")?.textContent?.trim() || "";
+        const rate = normNum(item.querySelector("description")?.textContent); // курс за номинал
+        const quant = normNum(item.querySelector("quant")?.textContent) ?? 1;
+        const idx = item.querySelector("index")?.textContent?.trim() || "";
+        const chg = normNum(item.querySelector("change")?.textContent);
+
+        return { code, name, quant, rate, idx, chg };
+      }).filter(Boolean);
+
+      return { rows, meta: { source: "nbk", url } };
+    }
+
+    async function fetchFromFallback(){
+      const res = await fetch(FALLBACK_JSON, { cache: "no-store" });
+      if(!res.ok) throw new Error(`Fallback HTTP ${res.status}`);
+      const data = await res.json();
+      // ожидаемый формат: { date:"DD.MM.YYYY", rates:[{code,name,quant,rate,idx,chg}] }
+      const rows = (data?.rates || []).filter(r => TARGET.has(r.code));
+      return { rows, meta: { source: "fallback", date: data?.date || null } };
     }
 
     async function load(){
       try{
-        setStatus('warn', 'Загружаю…');
+        setStatus("warn", "Загружаю…");
 
         const d = els.date.value ? new Date(els.date.value) : new Date();
-        // фикс: для date input браузер отдаёт YYYY-MM-DD в локали; new Date() ок
         const ddmmyyyy = toDDMMYYYY(d);
 
-        const rows = await fetchNBKRates(ddmmyyyy);
-        render(rows);
+        // 1) пробуем напрямую
+        const direct = await fetchFromNBK(ddmmyyyy);
+        render(direct.rows, direct.meta);
 
-        setStatus('ok', `Ок: ${rows.length} валют, дата ${ddmmyyyy}`);
-      }catch(e){
-        console.error(e);
-        setStatus('bad', `Ошибка: ${e?.message || e}`);
-
-        els.tbody.innerHTML = `
-          <tr>
-            <td colspan="7" class="muted">
-              Не удалось загрузить данные напрямую.
-              Частая причина — CORS блокировка в браузере для чужого домена.
-              Решение: ниже смотри вариант с GitHub Actions (когда данные подтягиваются в репозиторий).
-            </td>
-          </tr>
-        `;
+        if(direct.rows.length === 0){
+          setStatus("bad", `Нет данных на ${ddmmyyyy}. Попробуй предыдущий рабочий день.`);
+        } else {
+          setStatus("ok", `Ок: ${direct.rows.map(r=>r.code).join(", ")} · дата ${ddmmyyyy}`);
+        }
+      } catch (e) {
+        // 2) fallback json
+        try{
+          const fb = await fetchFromFallback();
+          render(fb.rows, fb.meta);
+          setStatus("ok", `Ок (fallback): данные из ${FALLBACK_JSON}${fb.meta?.date ? " · дата " + fb.meta.date : ""}`);
+          els.srcLink.href = FALLBACK_JSON;
+          els.srcLink.textContent = `LOCAL ${FALLBACK_JSON}`;
+        } catch (e2) {
+          console.error(e, e2);
+          setStatus("bad", "Ошибка загрузки (NBK + fallback). Проверь CORS/путь к JSON.");
+          els.tbody.innerHTML = `
+            <tr>
+              <td colspan="7" style="color:rgba(234,240,255,.70)">
+                Не получилось получить данные.
+                <br>Причины: CORS (браузер блокирует NBK), либо нет файла <b>${FALLBACK_JSON}</b>.
+                <br>Решение: включить GitHub Actions (ниже) или положить JSON вручную.
+              </td>
+            </tr>
+          `;
+          els.cards.innerHTML = "";
+        }
       }
     }
 
-    // init
     (function init(){
       const now = new Date();
       const yyyy = now.getFullYear();
-      const mm = String(now.getMonth()+1).padStart(2,'0');
-      const dd = String(now.getDate()).padStart(2,'0');
+      const mm = String(now.getMonth()+1).padStart(2,"0");
+      const dd = String(now.getDate()).padStart(2,"0");
       els.date.value = `${yyyy}-${mm}-${dd}`;
 
-      els.loadBtn.addEventListener('click', load);
-      els.q.addEventListener('input', () => {
-        // просто перерисовка текущей таблицы — без повторного fetch
-        // (чтобы было быстро)
-        const trs = els.tbody.dataset.rows ? JSON.parse(els.tbody.dataset.rows) : null;
-      });
-
-      // Автозагрузка при открытии страницы
+      els.loadBtn.addEventListener("click", load);
       load();
     })();
-
-    // Маленький трюк: сохраняем последнюю выборку в DOM, чтобы поиск работал без повторного fetch
-    const _render = render;
-    render = function(rows){
-      els.tbody.dataset.rows = JSON.stringify(rows);
-      _render(rows);
-    };
-
-    els.q.addEventListener('input', () => {
-      try{
-        const rows = JSON.parse(els.tbody.dataset.rows || '[]');
-        _render(rows);
-      }catch(_){}
-    });
   </script>
 </body>
 </html>
