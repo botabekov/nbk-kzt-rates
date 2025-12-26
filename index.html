@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Курсы НБК (KZT) — GitHub Pages</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#111a33;
+      --card2:#0f1730;
+      --line:rgba(255,255,255,.10);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.70);
+      --accent:#6aa6ff;
+      --accent2:#4b89ff;
+      --good:#22c55e;
+      --bad:#ef4444;
+      --warn:#f59e0b;
+      --radius:16px;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+      background: radial-gradient(1200px 600px at 20% 10%, rgba(106,166,255,.25), transparent 60%),
+                  radial-gradient(900px 500px at 80% 0%, rgba(245,158,11,.14), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:var(--accent)}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 16px 40px}
+    .header{
+      display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .title h1{margin:0;font-size:22px;letter-spacing:.2px}
+    .title p{margin:6px 0 0;color:var(--muted);line-height:1.45;max-width:720px}
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .controls{
+      padding:14px;
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+      background: rgba(0,0,0,.10);
+      border-bottom:1px solid var(--line);
+    }
+    .field{
+      display:flex;flex-direction:column;gap:6px;
+      min-width:180px;
+    }
+    label{font-size:12px;color:var(--muted)}
+    input[type="date"], input[type="text"]{
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      color:var(--text);
+      border-radius:12px;
+      padding:10px 12px;
+      outline:none;
+    }
+    input[type="date"]{min-width:180px}
+    input::placeholder{color:rgba(234,240,255,.45)}
+    .btn{
+      cursor:pointer;
+      border:0;
+      padding:11px 14px;
+      border-radius:12px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      color:#081028;
+      font-weight:700;
+      box-shadow: 0 10px 30px rgba(106,166,255,.25);
+      transition: transform .08s ease;
+      margin-top:18px;
+    }
+    .btn:active{transform: translateY(1px)}
+    .meta{
+      margin-left:auto;
+      display:flex;flex-direction:column;gap:6px;
+      min-width:260px;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:12px;
+      width:fit-content;
+    }
+    .dot{width:8px;height:8px;border-radius:999px;background:var(--warn)}
+    .dot.ok{background:var(--good)}
+    .dot.bad{background:var(--bad)}
+
+    .tableWrap{overflow:auto}
+    table{width:100%;border-collapse:separate;border-spacing:0;min-width:900px}
+    thead th{
+      position:sticky;top:0;
+      background: rgba(16,24,48,.92);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+      color:rgba(234,240,255,.85);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      padding:12px 12px;
+      text-align:left;
+      white-space:nowrap;
+    }
+    tbody td{
+      padding:12px 12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      color:rgba(234,240,255,.92);
+      font-size:13px;
+      white-space:nowrap;
+    }
+    tbody tr:hover td{background: rgba(255,255,255,.04)}
+    .muted{color:var(--muted)}
+    .num{text-align:right;font-variant-numeric: tabular-nums}
+    .chg.up{color:var(--good);font-weight:600}
+    .chg.down{color:var(--bad);font-weight:600}
+    .foot{
+      padding:12px 14px;color:var(--muted);font-size:12px;line-height:1.45
+    }
+    @media (max-width: 720px){
+      .meta{min-width:unset;width:100%}
+      .btn{width:100%}
+      .field{min-width:unset;flex:1}
+      input[type="date"]{width:100%}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div class="title">
+        <h1>Курсы валют НБК (KZT) — одностраничник на GitHub Pages</h1>
+        <p>
+          Данные берутся из публичного RSS/веб-сервиса НБК:
+          <span class="muted">get_rates.cfm (XML)</span>.
+          Если браузер заблокирует запрос из-за CORS — ниже дам решение через GitHub Actions.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="controls">
+        <div class="field">
+          <label for="date">Дата (курсы на дату)</label>
+          <input id="date" type="date" />
+        </div>
+
+        <div class="field" style="flex:1">
+          <label for="q">Поиск (код или название)</label>
+          <input id="q" type="text" placeholder="например: USD, EUR, РУБЛЬ..." />
+        </div>
+
+        <button class="btn" id="loadBtn">Загрузить</button>
+
+        <div class="meta">
+          <div class="pill"><span class="dot" id="statusDot"></span><span id="statusText">Готово</span></div>
+          <div class="pill">
+            Источник:
+            <a id="srcLink" href="#" target="_blank" rel="noreferrer">—</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Код</th>
+              <th>Валюта</th>
+              <th class="num">Номинал</th>
+              <th class="num">Курс (KZT)</th>
+              <th class="num">KZT за 1 ед.</th>
+              <th class="num">Изменение</th>
+              <th>Тренд</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="7" class="muted">Нажми «Загрузить»</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="foot">
+        Под капотом: <span class="muted">fetch → XML → DOMParser</span>.
+        Официальные курсы НБК фиксируются ежедневно. :contentReference[oaicite:4]{index=4}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const els = {
+      date: document.getElementById('date'),
+      q: document.getElementById('q'),
+      loadBtn: document.getElementById('loadBtn'),
+      tbody: document.getElementById('tbody'),
+      statusDot: document.getElementById('statusDot'),
+      statusText: document.getElementById('statusText'),
+      srcLink: document.getElementById('srcLink'),
+    };
+
+    function setStatus(kind, text){
+      els.statusText.textContent = text;
+      els.statusDot.classList.remove('ok','bad');
+      if(kind === 'ok') els.statusDot.classList.add('ok');
+      else if(kind === 'bad') els.statusDot.classList.add('bad');
+    }
+
+    function toDDMMYYYY(dateObj){
+      const dd = String(dateObj.getDate()).padStart(2,'0');
+      const mm = String(dateObj.getMonth()+1).padStart(2,'0');
+      const yyyy = dateObj.getFullYear();
+      return `${dd}.${mm}.${yyyy}`;
+    }
+
+    function normNum(s){
+      if(s == null) return null;
+      const t = String(s).trim().replace(/\s/g,'').replace(',', '.');
+      const n = Number(t);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function escapeHtml(s){
+      return String(s ?? '')
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
+    }
+
+    async function fetchNBKRates(ddmmyyyy){
+      // Официальный RSS/веб-сервис НБК: get_rates.cfm (XML)
+      // Пример структуры элементов: <fullname>, <title>, <description>, <quant>, <index>, <change> :contentReference[oaicite:5]{index=5}
+      const url = `https://nationalbank.kz/rss/get_rates.cfm?fdate=${encodeURIComponent(ddmmyyyy)}&switch=russian`;
+      els.srcLink.href = url;
+      els.srcLink.textContent = `get_rates.cfm?fdate=${ddmmyyyy}`;
+
+      const res = await fetch(url, { cache: 'no-store' });
+      if(!res.ok){
+        throw new Error(`HTTP ${res.status}`);
+      }
+      const xmlText = await res.text();
+
+      const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
+      const items = Array.from(xml.querySelectorAll('item'));
+
+      const rows = items.map(item => {
+        const code = item.querySelector('title')?.textContent?.trim() || '';
+        const name = item.querySelector('fullname')?.textContent?.trim() || '';
+        const rate = normNum(item.querySelector('description')?.textContent); // KZT за "номинал"
+        const quant = normNum(item.querySelector('quant')?.textContent) ?? 1;
+        const idx = item.querySelector('index')?.textContent?.trim() || '';
+        const chg = normNum(item.querySelector('change')?.textContent);
+
+        const per1 = (rate != null && quant) ? (rate / quant) : null;
+        return { code, name, quant, rate, per1, chg, idx };
+      });
+
+      // Иногда в RSS могут быть служебные/пустые элементы — подчистим
+      return rows.filter(r => r.code || r.name);
+    }
+
+    function render(rows){
+      const q = els.q.value.trim().toLowerCase();
+      const filtered = !q ? rows : rows.filter(r => (
+        r.code.toLowerCase().includes(q) || r.name.toLowerCase().includes(q)
+      ));
+
+      if(filtered.length === 0){
+        els.tbody.innerHTML = `<tr><td colspan="7" class="muted">Ничего не найдено</td></tr>`;
+        return;
+      }
+
+      els.tbody.innerHTML = filtered.map(r => {
+        const trend = (r.idx || '').toUpperCase();
+        const chgClass = (r.chg == null) ? '' : (r.chg > 0 ? 'up' : (r.chg < 0 ? 'down' : ''));
+        const trendText = trend || '—';
+
+        return `
+          <tr>
+            <td><b>${escapeHtml(r.code)}</b></td>
+            <td>${escapeHtml(r.name || '—')}</td>
+            <td class="num">${r.quant ?? '—'}</td>
+            <td class="num">${r.rate == null ? '—' : r.rate.toFixed(4)}</td>
+            <td class="num">${r.per1 == null ? '—' : r.per1.toFixed(4)}</td>
+            <td class="num chg ${chgClass}">${r.chg == null ? '—' : r.chg.toFixed(4)}</td>
+            <td class="muted">${escapeHtml(trendText)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function load(){
+      try{
+        setStatus('warn', 'Загружаю…');
+
+        const d = els.date.value ? new Date(els.date.value) : new Date();
+        // фикс: для date input браузер отдаёт YYYY-MM-DD в локали; new Date() ок
+        const ddmmyyyy = toDDMMYYYY(d);
+
+        const rows = await fetchNBKRates(ddmmyyyy);
+        render(rows);
+
+        setStatus('ok', `Ок: ${rows.length} валют, дата ${ddmmyyyy}`);
+      }catch(e){
+        console.error(e);
+        setStatus('bad', `Ошибка: ${e?.message || e}`);
+
+        els.tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="muted">
+              Не удалось загрузить данные напрямую.
+              Частая причина — CORS блокировка в браузере для чужого домена.
+              Решение: ниже смотри вариант с GitHub Actions (когда данные подтягиваются в репозиторий).
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    // init
+    (function init(){
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth()+1).padStart(2,'0');
+      const dd = String(now.getDate()).padStart(2,'0');
+      els.date.value = `${yyyy}-${mm}-${dd}`;
+
+      els.loadBtn.addEventListener('click', load);
+      els.q.addEventListener('input', () => {
+        // просто перерисовка текущей таблицы — без повторного fetch
+        // (чтобы было быстро)
+        const trs = els.tbody.dataset.rows ? JSON.parse(els.tbody.dataset.rows) : null;
+      });
+
+      // Автозагрузка при открытии страницы
+      load();
+    })();
+
+    // Маленький трюк: сохраняем последнюю выборку в DOM, чтобы поиск работал без повторного fetch
+    const _render = render;
+    render = function(rows){
+      els.tbody.dataset.rows = JSON.stringify(rows);
+      _render(rows);
+    };
+
+    els.q.addEventListener('input', () => {
+      try{
+        const rows = JSON.parse(els.tbody.dataset.rows || '[]');
+        _render(rows);
+      }catch(_){}
+    });
+  </script>
+</body>
+</html>
